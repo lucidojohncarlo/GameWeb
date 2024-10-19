@@ -70,7 +70,7 @@ app.post('/api/topup', async (req, res) => {
   const query = 'UPDATE global_points SET points = points + ? WHERE id = 1';
   try {
     const [results] = await db.execute(query, [randomPoints]);
-    res.send({ success: true, message: `Top-up successful. You received ${randomPoints} points.`, points: randomPoints });
+    res.send({ success: true, message: `Top-up successful.`, points: randomPoints });
   } catch (err) {
     console.error('Error during top-up:', err);
     res.status(500).send({ success: false, message: 'Top-up failed' });

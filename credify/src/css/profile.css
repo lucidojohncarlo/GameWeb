@@ -11,3 +11,16 @@
 .user-details p {
   margin-bottom: 0.5rem; /* Add some spacing between the details */
 }
+
+/* credify/src/css/nav.css */
+.update-points-btn {
+  padding: 5px 10px;
+  background-color: #4CAF50; /* Green background */
+  color: white; /* White text */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.update-points-btn:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
