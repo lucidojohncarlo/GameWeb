@@ -10,7 +10,6 @@ const Nav = ({ activeIndex, onNavClick, onSearchClick }) => {
 
   const navItems = [
     { icon: <FaHome />, label: 'Home' },
-    { icon: <FaGamepad />, label: 'Games' },
     { icon: <FaUser />, label: 'Profile' },
   ];
 
