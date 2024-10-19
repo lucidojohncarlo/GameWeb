@@ -18,7 +18,7 @@ const MainComponent = ({ isAuthenticated, setIsAuthenticated }) => {
   return (
     <div className="container mx-auto p-4">
       <Nav activeIndex={activeNav} onNavClick={handleNavClick} />
-      {activeNav === 2 ? (
+      {activeNav === 1 ? (
         <Profile isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} /> // Pass props to Profile
       ) : (
         <RightMain

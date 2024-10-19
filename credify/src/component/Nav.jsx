@@ -1,8 +1,9 @@
 import React, { useState, useContext } from 'react';
-import { FaHome, FaGamepad, FaUser } from 'react-icons/fa';
+import { FaHome, FaUser } from 'react-icons/fa';
 import axios from 'axios';
 import { AuthContext } from '../component/AuthContext'; // Assuming you have an AuthContext
 import '../css/nav.css'; // Import custom CSS
+
 
 const Nav = ({ activeIndex, onNavClick, onSearchClick }) => {
   const { user, setUser } = useContext(AuthContext);
@@ -41,13 +42,17 @@ const Nav = ({ activeIndex, onNavClick, onSearchClick }) => {
           </div>
           <div className="flex items-center space-x-4">
             <span className="points-display text-white">Points: {user ? user.points : 0}</span>
+       
           </div>
           <ul className="flex space-x-8">
             {navItems.map((item, index) => (
               <li
                 key={index}
                 className={`cursor-pointer flex items-center space-x-2 ${activeIndex === index ? 'text-secondary' : 'text-black'} hover:text-secondary transition-colors duration-300`}
-                onClick={() => onNavClick(index)}
+                onClick={() => {
+                  console.log(`Nav item ${index} clicked`); // Debugging log
+                  onNavClick(index);
+                }}
               >
                 {item.icon}
                 <span>{item.label}</span>
