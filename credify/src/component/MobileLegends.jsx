@@ -1,8 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { AuthContext } from '../component/AuthContext'; // Adjust the path as needed
-import mlBackground from '/GameWeb/credify/public/images/ml.jpg'; // Adjust the path as needed
+import { AuthContext } from '../component/AuthContext';
+import codmBackground from '/GameWeb/credify/public/images/ml.jpg';
 import '../css/topup.css';
 
 const MobileLegends = () => {
@@ -10,10 +10,23 @@ const MobileLegends = () => {
   const { user, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    console.log('User object:', user);
+  }, [user]);
+
   const handleTopUp = async (e) => {
     e.preventDefault();
+    if (!user) {
+      alert('Please log in to top up.');
+      return;
+    }
+
     try {
-      const response = await axios.post('http://localhost:5001/api/topup', { username: user.username, amount });
+      const response = await axios.post('http://localhost:5002/api/topup', { amount }, {
+        headers: {
+          Authorization: `Bearer ${user.token}`
+        }
+      });
       alert(response.data.message);
       setUser({ ...user, points: user.points + response.data.points });
     } catch (error) {
@@ -23,14 +36,14 @@ const MobileLegends = () => {
   };
 
   const handleBack = () => {
-    navigate(-1); // Navigate back to the previous page
+    navigate(-1);
   };
 
   return (
     <div className="relative min-h-screen">
       <div
         className="absolute inset-0 bg-cover bg-center filter blur-lg"
-        style={{ backgroundImage: `url(${mlBackground})` }}
+        style={{ backgroundImage: `url(${codmBackground})` }}
       ></div>
       <div className="relative z-10 flex items-center justify-center min-h-screen">
         <div className="p-16 bg-dark-transparent text-white rounded-lg shadow-lg max-w-lg w-full">
@@ -54,11 +67,6 @@ const MobileLegends = () => {
               Top-Up
             </button>
           </form>
-          {user && (
-            <div className="mt-4">
-              <h3 className="text-xl font-bold">Current Points: {user.points}</h3>
-            </div>
-          )}
         </div>
       </div>
     </div>

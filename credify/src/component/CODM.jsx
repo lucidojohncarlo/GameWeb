@@ -1,14 +1,18 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { AuthContext } from '../component/AuthContext'; // Adjust the path as needed
-import codmBackground from '/GameWeb/credify/public/images/codm.png'; // Adjust the path as needed
+import { AuthContext } from '../component/AuthContext';
+import codmBackground from '/GameWeb/credify/public/images/codm.png';
 import '../css/topup.css';
 
 const CODM = () => {
   const [amount, setAmount] = useState('');
   const { user, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log('User object:', user);
+  }, [user]);
 
   const handleTopUp = async (e) => {
     e.preventDefault();
@@ -20,7 +24,7 @@ const CODM = () => {
     try {
       const response = await axios.post('http://localhost:5002/api/topup', { amount }, {
         headers: {
-          Authorization: `Bearer ${user.token}` // Assuming you have a token in the user object
+          Authorization: `Bearer ${user.token}`
         }
       });
       alert(response.data.message);
@@ -32,7 +36,7 @@ const CODM = () => {
   };
 
   const handleBack = () => {
-    navigate(-1); // Navigate back to the previous page
+    navigate(-1);
   };
 
   return (

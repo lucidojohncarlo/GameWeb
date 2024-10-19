@@ -1,26 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import '../css/login.css'; // Import custom CSS for additional styling
+import { AuthContext } from '../component/AuthContext';
 
 const Login = ({ setIsAuthenticated }) => {
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+  
     try {
       const response = await axios.post('http://localhost:5002/api/login', { email, password });
-      if (response.data.success) {
-        setIsAuthenticated(true);
-        navigate('/dashboard');
-      } else {
-        alert(response.data.message);
-      }
+      login(response.data.user);
+      setIsAuthenticated(true);
+      navigate('/dashboard');
     } catch (error) {
-      console.error('Login error:', error);
-      alert('Login failed');
+      console.error('Login error:', error.response ? error.response.data : error.message);
+      alert(`Login failed: ${error.response ? error.response.data.message : error.message}`);
     }
   };
 
@@ -58,6 +59,7 @@ const Login = ({ setIsAuthenticated }) => {
         </p>
       </div>
     </div>
+
   );
 };
 
