@@ -1,9 +1,9 @@
-// credify/backendServer.cjs
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const mysql = require('mysql2/promise'); // Import mysql2/promise
+const mysql = require('mysql2/promise');
 const signupRoute = require('./routes/signup.cjs');
+const pointsRoute = require('./routes/points.cjs');
 
 const app = express();
 const PORT = 5003;
@@ -30,6 +30,7 @@ connectToDatabase();
 app.use(cors());
 app.use(bodyParser.json());
 app.use('/api/signup', signupRoute);
+app.use('/api/points', pointsRoute);
 
 app.listen(PORT, () => {
   console.log(`Backend server is running on http://localhost:${PORT}`);
