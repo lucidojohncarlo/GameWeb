@@ -1,0 +1,41 @@
+/* Custom styles for the login modal */
+.login-modal {
+  background: linear-gradient(135deg, #000000, #00FF00);
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  width: 24rem;
+}
+
+.login-modal h2 {
+  color: #00FF00;
+}
+
+.login-modal label {
+  color: #FFFFFF; /* White color for better readability */
+}
+
+.login-modal input {
+  border: 2px solid #00FF00;
+  background-color: #1a1a1a; /* Dark background for inputs */
+  color: #FFFFFF; /* White text color for inputs */
+}
+
+.login-modal button {
+  background-color: #00FF00;
+  color: #000;
+}
+
+.login-modal button:hover {
+  background-color: #00cc00;
+}
+
+.login-modal .toggle-button,
+.login-modal .close-button {
+  color: #00FF00;
+}
+
+.login-modal .toggle-button:hover,
+.login-modal .close-button:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,23 @@
+.bg-cover {
+    background-size: cover;
+  }
+  
+  .bg-center {
+    background-position: center;
+  }
+  
+  .filter {
+    filter: blur(10px);
+  }
+  
+  .min-h-screen {
+    min-height: 100vh;
+  }
+  
+  .bg-dark-transparent {
+    background-color: rgba(0, 0, 0, 0.308); /* Adjust the alpha value for transparency */
+  }
+  
+  .max-w-lg {
+    max-width: 32rem; /* Adjust the max-width as needed */
+  }

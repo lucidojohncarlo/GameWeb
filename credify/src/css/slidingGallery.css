@@ -1,0 +1,21 @@
+.carousel-container {
+  max-width: 800px; /* Adjust the max-width as needed */
+  margin: 0 auto; /* Center the carousel */
+}
+
+.carousel-item img {
+  width: 100%;
+  height: auto;
+  max-height: 400px; /* Adjust the max-height as needed */
+  border-radius: 10px;
+}
+
+.slick-prev, .slick-next {
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
