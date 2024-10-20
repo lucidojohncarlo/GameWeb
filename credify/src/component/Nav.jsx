@@ -1,9 +1,8 @@
 import React, { useState, useContext } from 'react';
-import { FaHome, FaUser } from 'react-icons/fa';
+import { FaHome, FaUser, FaStore } from 'react-icons/fa'; // Import FaStore icon
 import axios from 'axios';
 import { AuthContext } from '../component/AuthContext'; // Assuming you have an AuthContext
 import '../css/nav.css'; // Import custom CSS
-
 
 const Nav = ({ activeIndex, onNavClick, onSearchClick }) => {
   const { user, setUser } = useContext(AuthContext);
@@ -12,6 +11,7 @@ const Nav = ({ activeIndex, onNavClick, onSearchClick }) => {
   const navItems = [
     { icon: <FaHome />, label: 'Home' },
     { icon: <FaUser />, label: 'Profile' },
+    { icon: <FaStore />, label: 'Store' }, // Add Store item
   ];
 
   const toggleLogin = () => {
@@ -42,7 +42,6 @@ const Nav = ({ activeIndex, onNavClick, onSearchClick }) => {
           </div>
           <div className="flex items-center space-x-4">
             <span className="points-display text-white">Points: {user ? user.points : 0}</span>
-       
           </div>
           <ul className="flex space-x-8">
             {navItems.map((item, index) => (

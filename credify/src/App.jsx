@@ -11,6 +11,7 @@ import DOTA2 from './component/DOTA2'; // Assuming you have a DOTA2 component
 import MobileLegends from './component/MobileLegends'; // Assuming you have a MobileLegends component
 import Valorant from './component/Valorant'; // Assuming you have a Valorant component
 import LeagueOfLegends from './component/LeagueOfLegends'; // Assuming you have a LeagueOfLegends component
+import Store from './component/Store'; // Import Store component
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -33,6 +34,7 @@ function App() {
           <Route path="/mobilelegends" element={<PrivateRoute component={MobileLegends} />} />
           <Route path="/valorant" element={<PrivateRoute component={Valorant} />} />
           <Route path="/leagueoflegends" element={<PrivateRoute component={LeagueOfLegends} />} />
+          <Route path="/store" element={<PrivateRoute component={Store} />} /> {/* Add Store route */}
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
       </Router>
