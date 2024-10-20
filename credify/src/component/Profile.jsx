@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/profile.css';
 import { AuthContext } from '../component/AuthContext';
+import SendPoints from '../component/SendPoints';
 
 const Profile = ({ isAuthenticated, setIsAuthenticated }) => {
   const navigate = useNavigate();
@@ -32,9 +33,7 @@ const Profile = ({ isAuthenticated, setIsAuthenticated }) => {
         </div>
       </div>
       <div className="user-details">
-        <p className="text-gray-400">{user.bio || 'No bio available'}</p>
-        <p className="text-gray-400">{user.location || 'No location available'}</p>
-        <p className="text-gray-400">Joined: {user.joined || 'Unknown'}</p>
+        <SendPoints />
       </div>
       <button onClick={logout} className="mt-4 px-4 py-2 bg-red-500 text-white rounded">Logout</button>
     </div>

@@ -1,37 +1,20 @@
-// credify/backendServer.cjs
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const mysql = require('mysql2/promise');
 const signupRoute = require('./routes/signup.cjs');
 const pointsRoute = require('./routes/points.cjs');
+const topupRoute = require('./routes/topup.cjs');
+const updatePointsRoute = require('./routes/updatePoints.cjs'); // Add this line
 
 const app = express();
 const PORT = 5003;
-
-const dbConfig = {
-  host: 'localhost',
-  user: 'root',
-  password: '12345',
-  database: 'credify',
-};
-
-let db;
-async function connectToDatabase() {
-  try {
-    db = await mysql.createConnection(dbConfig);
-    console.log('Connected to the database');
-  } catch (error) {
-    console.error('Error connecting to the database:', error);
-  }
-}
-
-connectToDatabase();
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use('/api/signup', signupRoute);
 app.use('/api/points', pointsRoute);
+app.use('/api/topup', topupRoute);
+app.use('/api/points', updatePointsRoute); // Add this line
 
 // Add logging to confirm route registration
 app.use((req, res, next) => {

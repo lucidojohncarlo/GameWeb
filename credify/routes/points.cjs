@@ -1,33 +1,53 @@
-// credify/routes/points.cjs
 const express = require('express');
 const router = express.Router();
-const db = require('../db.cjs');
+const pool = require('../db.cjs');
 
-// Test route to verify the server is working
-router.get('/test', (req, res) => {
-  res.send('Test route is working');
-});
+// Existing routes...
 
-router.post('/update', (req, res) => {
-  const { email, points } = req.body;
+router.post('/send', async (req, res) => {
+  const { senderEmail, receiverEmail, points } = req.body;
 
-  if (!email || points === undefined) {
-    return res.status(400).send({ success: false, message: 'Email and points are required' });
+  console.log('Received send points request:', { senderEmail, receiverEmail, points });
+
+  if (!senderEmail || !receiverEmail || points === undefined) {
+    return res.status(400).send({ success: false, message: 'Sender email, receiver email, and points are required' });
   }
 
-  const query = 'UPDATE users SET points = points + ? WHERE email = ?';
-  db.query(query, [points, email], (err, results) => {
-    if (err) {
-      console.error('Error updating points:', err);
-      return res.status(500).send({ success: false, message: 'Failed to update points' });
+  const connection = await pool.getConnection();
+  try {
+    await connection.beginTransaction();
+
+    // Deduct points from sender
+    const [senderResult] = await connection.execute(
+      'UPDATE users SET points = points - ? WHERE email = ? AND points >= ?',
+      [points, senderEmail, points]
+    );
+
+    if (senderResult.affectedRows === 0) {
+      await connection.rollback();
+      return res.status(400).send({ success: false, message: 'Insufficient points or sender not found' });
     }
 
-    if (results.affectedRows === 0) {
-      return res.status(404).send({ success: false, message: 'User not found' });
+    // Add points to receiver
+    const [receiverResult] = await connection.execute(
+      'UPDATE users SET points = points + ? WHERE email = ?',
+      [points, receiverEmail]
+    );
+
+    if (receiverResult.affectedRows === 0) {
+      await connection.rollback();
+      return res.status(404).send({ success: false, message: 'Receiver not found' });
     }
 
-    res.send({ success: true, message: 'Points updated successfully' });
-  });
+    await connection.commit();
+    res.send({ success: true, message: 'Points sent successfully' });
+  } catch (error) {
+    await connection.rollback();
+    console.error('Error sending points:', error);
+    res.status(500).send({ success: false, message: 'Failed to send points' });
+  } finally {
+    connection.release();
+  }
 });
 
 module.exports = router;
