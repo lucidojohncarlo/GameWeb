@@ -1,8 +1,9 @@
 import React from 'react';
+import '../css/libraryCard.css'; // Import the new CSS file
 
 const LibraryCard = ({ game }) => {
   return (
-    <div className="library-card flex items-center p-4 bg-white rounded shadow mb-4">
+    <div className="library-card flex items-center p-4 bg-white rounded shadow mb-4 wide-card">
       <div className="game-logo w-16 h-16 mr-4">
         <img src={game.logo} alt={game.title} className="w-full h-full object-cover rounded" />
       </div>
