@@ -6,7 +6,7 @@ import SendPoints from '../component/SendPoints';
 
 const Profile = ({ isAuthenticated, setIsAuthenticated }) => {
   const navigate = useNavigate();
-  const { user } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
 
   const logout = () => {
     setIsAuthenticated(false);
@@ -19,6 +19,10 @@ const Profile = ({ isAuthenticated, setIsAuthenticated }) => {
     }
   }, [isAuthenticated, navigate]);
 
+  const handlePointsUpdate = (newPoints) => {
+    setUser({ ...user, points: newPoints });
+  };
+
   if (!isAuthenticated || !user) {
     return null;
   }
@@ -30,10 +34,11 @@ const Profile = ({ isAuthenticated, setIsAuthenticated }) => {
         <div>
           <h2 className="text-3xl font-bold">{user.username}</h2>
           <p className="text-gray-400">{user.email}</p>
+          <p className="text-gray-400">Points: {user.points}</p>
         </div>
       </div>
       <div className="user-details">
-        <SendPoints />
+        <SendPoints onPointsUpdate={handlePointsUpdate} />
       </div>
       <button onClick={logout} className="mt-4 px-4 py-2 bg-red-500 text-white rounded">Logout</button>
     </div>

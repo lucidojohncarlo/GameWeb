@@ -3,8 +3,8 @@ import axios from 'axios';
 import { AuthContext } from '../component/AuthContext';
 import '../css/modal.css';
 
-const SendPoints = () => {
-  const { user } = useContext(AuthContext);
+const SendPoints = ({ onPointsUpdate }) => {
+  const { user, setUser } = useContext(AuthContext);
   const [receiverEmail, setReceiverEmail] = useState('');
   const [points, setPoints] = useState(0);
   const [error, setError] = useState(null);
@@ -19,6 +19,9 @@ const SendPoints = () => {
       });
       console.log('Points sent successfully:', response.data);
       setIsModalOpen(true); // Show modal on success
+      const newPoints = user.points - points;
+      onPointsUpdate(newPoints); // Update points in parent component
+      setUser({ ...user, points: newPoints }); // Update points in AuthContext
     } catch (error) {
       if (error.response) {
         console.error('Error response:', error.response.data);
